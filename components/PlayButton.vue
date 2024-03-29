@@ -33,12 +33,12 @@ const timeUntilMidnight = (datetimeStr: any) => {
 
 const playClicked = async () => {
   // console.log(user.value);
-  if (!user.value) {
+  if (user.value) {
     loginStore.openLogin();
     toastStore.showToast("Za igru se potrebno prijaviti!");
     return;
   }
-  if (user.value) {
+  if (!user.value) {
     // loginStore.openLogin();
     const response = await $fetch("/api/check_game_session", {
       method: "POST",
@@ -57,10 +57,8 @@ const playClicked = async () => {
 
     console.log("Enable to play status:", enablePlay.value);
 
-    if (enablePlay?.value?.code) {
-      navigateTo("/game");
-      return;
-    }
+    navigateTo("/game");
+    return;
 
     toastStore.showToast("Danas si već odigrao, pokušaj ponovno sutra!");
     return;
